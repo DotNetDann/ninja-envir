@@ -1,0 +1,15 @@
+{
+  "name": "current_cost_envir",
+  "version": "1.0.0",
+  "description": "Current Cost EnviR Power Meter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": {
+    "name": "Daniel Hyles",
+    "email": "daniel.hyles@gmail.com"
+  },
+  "license": "BSD"
+}
