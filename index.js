@@ -28,6 +28,10 @@ function envir(opts,app) {
   var serialPortName = "ttyUSB0";
 
 
+// TODO: Check Serial ports. If none then exit.
+
+
+
   var self = this;
 
   app.on('client::up',function(){
@@ -41,6 +45,7 @@ function envir(opts,app) {
     self.save();
 
     // Register a device
+    console.log("Envir: Register");
     self.emit('register', new Device(serialPortName));
   });
 };
