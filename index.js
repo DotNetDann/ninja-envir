@@ -1,5 +1,6 @@
-var Device = require('./lib/envir')
+var EnviR = require('./lib/envir')
   , Comms = require('./lib/comms')
+  , configHandlers = require('./lib/config')
   , util = require('util')
   , stream = require('stream');
 
@@ -23,9 +24,6 @@ util.inherits(envir,stream);
  
 
 /**
- * Find your serial port via command line 
- *    $ dmesg | grep tty
- *
  * Serial port name 'ttyUSB0' is for the USB cable - http://www.currentcost.com/product-datacable.html
  * Serial port name 'ttyO5' is on-board Serial 5
  * 		NOTE: You need to put these lines in /etc/rc.local
@@ -46,7 +44,7 @@ function envir(opts,app) {
   this._opts = opts;
   var self = this;
 
-  var currentCostComms = null;
+  var envirDriver = null;
 
   if (self._opts.serialPortName == null) {
     // Set the default varables
@@ -62,8 +60,9 @@ function envir(opts,app) {
   app.on('client::up',function(){
     // The client is now connected to the cloud
 
-    if (currentCostComms == null) {
-      currentCostComms = new Comms("/dev/" + self._opts.serialPortName);
+    if (envirDriver == null) {
+      var currentCostComms = new Comms(app, "/dev/" + self._opts.serialPortName);
+      envirDriver = new EnviR(self._opts, currentCostComms);
     }
 
     // Do stuff with opts, and then commit it to disk
@@ -75,17 +74,31 @@ function envir(opts,app) {
 
     // Register a device
     console.log("Envir: Register");
-    self.emit('register', new Device(self._opts, currentCostComms));
+    self.emit('register', envirDriver);
   });
 };
 
-/**
- * Called when config data is received from the cloud
- * @param  {Object} config Configuration data
- */
-envir.prototype.config = function(config) {
 
+/**
+ * Called when a user prompts a configuration
+ * @param  {Object}   rpc     Used to match up requests.
+ * @param  {Function} cb      Callback with return data
+ */
+envir.prototype.config = function(rpc,cb) {
+
+  var self = this;
+
+  if (!rpc) {
+    return configHandlers.probe.call(this,cb);
+  }
+
+  switch (rpc.method) {
+    case 'manual_set':     return configHandlers.manual_set.call(this,rpc.params,cb);     break;
+
+    default:               return cb(true);                                               break;
+  }
 };
+
 
 // Export it
 module.exports = envir;
