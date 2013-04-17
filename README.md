@@ -19,12 +19,15 @@ Log into the Ninjablock via SSH
 ```
 You will then be able to edit any settings via the drivers configuration on the Ninja Dashboard. (Any changes require a restart)
 
+## Ninjablock Dashboard
+![ScreenShot](https://raw.github.com/DotNetDann/ninja-envir/master/Dashboard.png)
+
 ## Serial Communications
 By default the driver will expect the USB cable that came with the EnviR (ttyUSB0)
 You have the option to use the serial pins on the board.
 
 On the beagle bone (http://beagleboard.org/bone)
-You can use serial port name 'ttyO5' which is on-board Serial 5
+You can use serial port name 'ttyO5' which is on-board Serial 5 (http://www.jerome-bernard.com/blog/2012/06/04/beaglebone-serial-ports-and-xbees/)
 
 NOTE: You need to put these lines in /etc/rc.local
 ```
