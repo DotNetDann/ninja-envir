@@ -10,9 +10,6 @@
     "type": "git",
     "url": "https://github.com/DotNetDann"
   },
-  "author": {
-    "name": "Daniel Hyles",
-    "email": "daniel.hyles@gmail.com"
-  },
+  "author": "Daniel Hyles",
   "license": "BSD"
 }
