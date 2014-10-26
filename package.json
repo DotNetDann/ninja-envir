@@ -1,6 +1,6 @@
 {
-  "name": "current_cost_envir",
-  "version": "1.6.0",
+  "name": "ninja-envir",
+  "version": "1.7.0",
   "description": "Current Cost EnviR Power Meter",
   "main": "index.js",
   "scripts": {
